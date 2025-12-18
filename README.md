@@ -1,1 +1,570 @@
-# BibhuRaj-
+# BibhuRaj
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibhu Raj - Portfolio</title>
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A; /* Deeper background for more contrast */
+            color: #EAEAEA;
+            padding-top: 5rem;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF; /* Brighter title color */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 4px;
+            background-color: #6366F1; /* Indigo-500 */
+            border-radius: 9999px;
+            transform-origin: left;
+            transition: width 0.3s ease-in-out;
+        }
+        .section-title:hover::after {
+            width: 100%;
+        }
+
+        /* Subtle Underline Animation for Nav Links */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #6366F1;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Heading Text Reveal Animation */
+        .text-reveal {
+            opacity: 0;
+            animation: text-reveal-fade 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation-delay: 0.5s; /* Add a slight delay to the reveal */
+        }
+
+        @keyframes text-reveal-fade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Base classes for on-scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s ease-out;
+        }
+        .animate-on-scroll.fade-in-left {
+            transform: translateX(-50px);
+        }
+        .animate-on-scroll.fade-in-right {
+            transform: translateX(50px);
+        }
+        .animate-on-scroll.fade-in-up {
+            transform: translateY(50px);
+        }
+
+        /* Final state for animations */
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        
+        /* Hover effect for cards, now with a scaling pop effect */
+        .card-hover-effect {
+            transition: all 0.3s ease-in-out;
+            transform: translateY(0) scale(1);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and pop effect */
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2), 0 4px 6px -2px rgba(99, 102, 241, 0.1); /* Subtle blue glow */
+        }
+        
+        /* Gradient for buttons */
+        .gradient-button {
+            background-image: linear-gradient(to right, #6366F1, #8B5CF6);
+            transition: all 0.3s ease-in-out;
+        }
+        .gradient-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Glow effect for contact section */
+        @keyframes glowing-border {
+            0% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.4); }
+        }
+        .contact-glow {
+            animation: glowing-border 3s infinite ease-in-out;
+        }
+
+        /* Background particle animation for Hero Section */
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+        .particle {
+            position: absolute;
+            background-color: #6366F1;
+            border-radius: 50%;
+            animation: move-particle 20s infinite ease-in-out;
+        }
+        .particle:nth-child(1) { width: 40px; height: 40px; top: 10%; left: 10%; animation-duration: 25s; }
+        .particle:nth-child(2) { width: 25px; height: 25px; top: 50%; left: 30%; animation-duration: 20s; }
+        .particle:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 60%; animation-duration: 30s; }
+        .particle:nth-child(4) { width: 30px; height: 30px; top: 20%; left: 85%; animation-duration: 22s; }
+        .particle:nth-child(5) { width: 50px; height: 50px; top: 70%; left: 5%; animation-duration: 28s; }
+        .particle:nth-child(6) { width: 35px; height: 35px; top: 40%; left: 95%; animation-duration: 26s; }
+
+        @keyframes move-particle {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-20vw, 20vh); }
+            50% { transform: translate(-50vw, -10vh); }
+            75% { transform: translate(-20vw, -20vh); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Fixed Navigation Bar -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-gray-950/80 backdrop-blur-sm shadow-xl">
+        <div class="container mx-auto p-4 flex flex-wrap justify-center sm:justify-between items-center space-x-2 sm:space-x-4">
+            <a href="#home" class="text-xl font-extrabold text-indigo-400 hover:text-indigo-300 transition duration-300 nav-link">Bibhu Raj</a>
+            <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mt-2 sm:mt-0">
+                <a href="#about" class="text-gray-300 hover:text-white transition duration-300 nav-link">About</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300 nav-link">Skills</a>
+                <a href="#experience" class="text-gray-300 hover:text-white transition duration-300 nav-link">Experience</a>
+                <a href="#education" class="text-gray-300 hover:text-white transition duration-300 nav-link">Education</a>
+                <a href="#industrial-tours" class="text-gray-300 hover:text-white transition duration-300 nav-link">Tours</a>
+                <a href="#seminars-workshops-responsibilities" class="text-gray-300 hover:text-white transition duration-300 nav-link">Seminars</a>
+                <a href="#reports" class="text-gray-300 hover:text-white transition duration-300 nav-link">Reports</a>
+                <a href="#interests" class="text-gray-300 hover:text-white transition duration-300 nav-link">Interests</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300 nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content container -->
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Hero Section -->
+        <header id="home" class="relative flex flex-col items-center justify-center text-center py-12 md:py-24 space-y-4">
+            <!-- New animated background particles -->
+            <div class="hero-background">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <!-- Animated Heading Text -->
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight text-reveal">Bibhu Raj</h1>
+            <p class="text-2xl md:text-3xl font-light text-gray-300 text-reveal" style="animation-delay: 1s;">Business & Marketing Professional</p>
+            <!-- Call to action button with gradient -->
+            <a href="#contact" class="mt-8 gradient-button text-white font-semibold py-3 px-8 rounded-full shadow-lg animate-on-scroll fade-in-up" style="animation-delay: 1.5s;">
+                Connect With Me
+            </a>
+        </header>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">About Me</h2>
+            <p class="text-gray-300 leading-relaxed text-lg">
+                As a dynamic and results-driven professional with a background in Business Administration, I specialize in digital and social media marketing, content creation, and team management. I have gained practical experience through various internships, where I honed my skills in critical data analysis, effective communication, and strategic sales promotion. My goal is to leverage my problem-solving abilities and passion for exploring new technologies to contribute to an organization's growth.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Skills</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <!-- Loop through skills to create a card for each -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Social Media Management</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Content Writing</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Digital Marketing</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Team Management</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Problem Solving</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Time Management</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Effective Communication</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">HTML (Intermediate)</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">MS Office</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Video Editing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Experience & Internships</h2>
+            <div class="space-y-12">
+                <!-- Individual Experience Block with enhanced hover effect -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Email Marketing Specialist</h3>
+                            <p class="text-gray-300">Gravity Engineering Services Pvt. Ltd.</p>
+                        </div>
+                        <p class="text-sm text-gray-400">July 2025 - Present</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Conducted cold calls and LinkedIn/email outreach to generate qualified B2B leads.</li>
+                        <li>Scheduled meetings for the sales team and maintained CRM tools.</li>
+                        <li>Tracked key performance metrics: lead volume, conversions, and meetings booked.</li>
+                        <li>Collaborated with marketing and supported lead database creation.</li>
+                    </ul>
+                </div>
+
+                <!-- Individual Experience Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Content Designer</h3>
+                            <p class="text-gray-300">To-let Globe</p>
+                        </div>
+                        <p class="text-sm text-gray-400">May 2024 - July 2024</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Developed creative content and wrote strategic articles and blogs.</li>
+                        <li>Contributed to Wikipedia page writing.</li>
+                        <li>Practiced effective communication and time management.</li>
+                    </ul>
+                </div>
+
+                <!-- Individual Experience Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Sales & Marketing Intern</h3>
+                            <p class="text-gray-300">BOLT IOT</p>
+                        </div>
+                        <p class="text-sm text-gray-400">May 2024 - July 2024</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Prospected potential clients and promoted sales strategies.</li>
+                        <li>Understood target market dynamics and managed marketing processes.</li>
+                        <li>Engaged with the audience effectively.</li>
+                    </ul>
+                </div>
+
+                <!-- Individual Experience Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Data Verifier</h3>
+                            <p class="text-gray-300">Rodiac Consultancy Pvt Ltd</p>
+                        </div>
+                        <p class="text-sm text-gray-400">May 2024 - June 2024</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Practiced effective communication and analyzed critical data.</li>
+                        <li>Managed time effectively and prepared reports and analyses.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Education</h2>
+            <div class="space-y-8">
+                <!-- Individual Education Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Bachelor of Business Administration</h3>
+                            <p class="text-gray-300">BIT, PATNA</p>
+                        </div>
+                        <p class="text-sm text-gray-400">2022 - 2025</p>
+                    </div>
+                    <p class="text-gray-400 mt-2">CGPA: 8.0</p>
+                </div>
+                <!-- Individual Education Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Class XII, CBSE</h3>
+                            <p class="text-gray-300">New Era Public School, Patna</p>
+                        </div>
+                        <p class="text-sm text-gray-400">2022</p>
+                    </div>
+                    <p class="text-gray-400 mt-2">Percentage: 80%</p>
+                </div>
+                <!-- Individual Education Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-400">Class X, CBSE</h3>
+                            <p class="text-gray-300">New Era Public School, Patna</p>
+                        </div>
+                        <p class="text-sm text-gray-400">2020</p>
+                    </div>
+                    <p class="text-gray-400 mt-2">Percentage: 75%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Industrial Tours Section -->
+        <section id="industrial-tours" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Industrial Tours</h2>
+            <div class="space-y-8">
+                <!-- Individual Tour Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">SUDHA DAIRY PLANT</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained insights into the core functions of dairy operations.</li>
+                        <li>Understood the role of low-level management in daily tasks and coordination.</li>
+                        <li>Learned about relationship management and effective teamwork in operations.</li>
+                        <li>Noted practices in quality control and hygiene.</li>
+                        <li>Understood the process of making dairy products.</li>
+                    </ul>
+                </div>
+                <!-- Individual Tour Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">RAIL WHEEL PLANT</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained management perspectives on plant operations.</li>
+                        <li>Observed protocols for worker safety and well-being.</li>
+                        <li>Explored technology integration and developed analytical thinking through process analysis.</li>
+                        <li>Understood the quality control process.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seminars, Workshops & Responsibilities Section -->
+        <section id="seminars-workshops-responsibilities" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Seminars, Workshops & Responsibilities</h2>
+            <div class="space-y-8">
+                <!-- Individual Block: Entrepreneurs Edge Meet -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">Entrepreneurs Edge Meet</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained insights into the entrepreneurial mindset and business growth.</li>
+                        <li>Understood the qualities and important roles of an entrepreneur.</li>
+                        <li>Learned about business mindset.</li>
+                    </ul>
+                </div>
+                <!-- Individual Block: ORACLE -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">ORACLE Workshop</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Learned how Apex works and its system management.</li>
+                        <li>Gained an introduction to the Oracle team and new technology experience.</li>
+                        <li>Practiced data compilation through SQL forms.</li>
+                    </ul>
+                </div>
+                <!-- Individual Block: ISRO Space Event -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">ISRO Space Event</h3>
+                    <p class="text-gray-300 mb-2">Position of Responsibility in college campus event</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Managed audience engagement and time effectively.</li>
+                        <li>Handled event and crowd management.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Reports & Projects</h2>
+            <div class="space-y-8">
+                <!-- Individual Report Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">Careerboost Report</h3>
+                    <p class="text-gray-300 mb-2">Mentor: Dr. Ashish Mohan Dubey</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained knowledge in Financial Management and Communication Skills.</li>
+                        <li>Conducted a SWOT analysis and learned about Marketing Management.</li>
+                        <li>Developed skills in teamwork and problem-solving.</li>
+                    </ul>
+                </div>
+                <!-- Individual Report Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">Summer Internship Report</h3>
+                    <p class="text-gray-300 mb-2">Mentor: Dr. Sunil Kumar Pandey</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained knowledge in Communication Skills.</li>
+                        <li>Conducted a SWOT analysis and learned about time management.</li>
+                        <li>Developed skills in teamwork and problem-solving.</li>
+                        <li>Dived deep into work insights and their application in a professional portfolio.</li>
+                    </ul>
+                </div>
+                 <!-- Individual Report Block -->
+                <div class="bg-gray-900 p-6 rounded-xl shadow-xl border border-gray-700 card-hover-effect animate-on-scroll fade-in-up">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">Research Report</h3>
+                    <p class="text-gray-300 mb-2">Mentor: Dr. Iftekhar Ahmad</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Gained knowledge in Communication Skills.</li>
+                        <li>Conducted a SWOT analysis and daily problem analysis.</li>
+                        <li>Developed skills in teamwork and problem-solving.</li>
+                        <li>Deep dived into real-time problems faced by students through direct interaction with people.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interests Section -->
+        <section id="interests" class="py-16 animate-on-scroll fade-in-up card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold">Interests</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Photography</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Mimicry</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Writing</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">New Technologies</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center card-hover-effect animate-on-scroll fade-in-up">
+                    <p class="font-medium text-gray-200">Cricket</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Contact Section with a glowing effect -->
+        <section id="contact" class="py-16 animate-on-scroll fade-in-up bg-gray-900 rounded-xl shadow-xl border border-indigo-500/50 contact-glow text-center card-hover-effect">
+            <h2 class="section-title text-3xl md:text-4xl font-semibold text-white mb-6">Connect With Me</h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 text-lg md:text-xl">
+                <a href="https://www.linkedin.com/in/bibhu-raj-71583726a" target="_blank" class="text-indigo-400 hover:text-white transition duration-300 flex items-center nav-link">
+                    <!-- LinkedIn Logo SVG -->
+                    <svg class="w-5 h-5 mr-2 fill-current text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.763 7 2.456v6.779z"/>
+                    </svg>
+                    <span class="font-bold">LinkedIn:</span> Bibhu Raj
+                </a>
+                <a href="mailto:bibhuraj03@gmail.com" class="text-indigo-400 hover:text-white transition duration-300 flex items-center nav-link">
+                    <!-- Email Logo SVG -->
+                    <svg class="w-5 h-5 mr-2 fill-current text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.721v14.428h24v-14.428l-12 9.721z"/>
+                    </svg>
+                    <span class="font-bold">Email:</span> bibhuraj03@gmail.com
+                </a>
+                <a href="tel:+919771960542" class="text-indigo-400 hover:text-white transition duration-300 flex items-center nav-link">
+                    <!-- Phone Logo SVG -->
+                    <svg class="w-5 h-5 mr-2 fill-current text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 22.621l-3.521-6.795c-.092-.178-.26-.307-.457-.348-.558-.124-1.282-.249-2.259.043l-1.474 1.346c-.083.076-.174.131-.269.17-.184.076-.381.127-.584.156-1.547.415-3.088-.415-4.228-1.554-1.141-1.14-1.972-2.68-1.556-4.227.029-.203.08-.4.156-.585.04-.095.094-.186.17-.269l1.345-1.474c.287-.976.162-1.7.038-2.258-.041-.197-.17-.365-.348-.457l-6.795-3.522c-.636-.328-1.391-.184-1.879.314-.488.498-.564 1.258-.314 1.889l2.766 5.342c.451.87.893 1.77 1.353 2.684.557 1.123 1.238 2.215 2.062 3.255 1.579 2.003 3.693 3.513 6.002 4.093.076.019.15.035.226.046.079.012.158.018.237.018.736.002 1.325-.562 1.325-1.298z"/>
+                    </svg>
+                    <span class="font-bold">Phone:</span> +91-9771960542
+                </a>
+                <a href="https://www.instagram.com/bibhuraj_03?igsh=Z3BncmN2aDh5NXB3" target="_blank" class="text-indigo-400 hover:text-white transition duration-300 flex items-center nav-link">
+                    <!-- Instagram Logo SVG -->
+                    <svg class="w-5 h-5 mr-2 fill-current text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.252.148 4.671 1.692 4.821 4.821.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.15 3.129-1.569 4.548-4.821 4.697-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.149-4.671-1.568-4.821-4.821-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.15-3.252 1.569-4.671 4.821-4.821 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.695 0-4.125.013-5.592.081-3.993.18-6.494 2.68-6.671 6.671-.068 1.467-.081 1.897-.081 5.592s.013 4.125.081 5.592c.177 3.993 2.68 6.494 6.671 6.671 1.467.068 1.897.081 5.592.081s4.125-.013 5.592-.081c3.993-.177 6.494-2.68 6.671-6.671.068-1.467.081-1.897.081-5.592s-.013-4.125-.081-5.592c-.177-3.993-2.68-6.494-6.671-6.671-1.467-.068-1.897-.081-5.592-.081z"/>
+                        <path d="M12 6.871c-2.834 0-5.129 2.302-5.129 5.129s2.295 5.129 5.129 5.129 5.129-2.302 5.129-5.129-2.295-5.129-5.129-5.129z"/>
+                        <path d="M19.341 3.456c-1.045 0-1.89 0.846-1.89 1.89s0.845 1.89 1.89 1.89 1.89-0.846 1.89-1.89c0-1.044-0.844-1.89-1.89-1.89z"/>
+                    </svg>
+                    <span class="font-bold">Instagram:</span> @bibhuraj_03
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 text-center text-gray-500 animate-on-scroll fade-in-up">
+            <p><b>THANK YOU</b></p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript for on-scroll animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Stop observing once the element is visible
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+            // Get all elements that should be animated
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            animateElements.forEach(element => {
+                // Determine the animation type based on data attribute or default
+                const animationType = element.getAttribute('data-animation-type') || 'fade-in-up';
+                element.classList.add(animationType);
+                observer.observe(element);
+            });
+
+            // Re-select and observe all cards for a staggered effect
+            const cardElements = document.querySelectorAll('.card-hover-effect');
+            cardElements.forEach((card, index) => {
+                // Stagger the animation of cards by adding a delay based on their index
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
